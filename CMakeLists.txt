@@ -7,7 +7,7 @@ INCLUDE_REGULAR_EXPRESSION("^.*.h$")
 # "Nearly Raw Raster Data" within the open-source Teem software
 # package. See http://teem.sourceforge.net for more information.
 #
-OPTION(BUILD_EXAMPLE  "Build Nrrd example" OFF)
+OPTION(BUILD_NRRD_EXAMPLE  "Build Nrrd example" OFF)
 
 SET(nrrdio_SRCS 754.c mop.c array.c parseAir.c dio.c sane.c endianAir.c
 string.c enum.c miscAir.c biffbiff.c biffmsg.c accessors.c defaultsNrrd.c
@@ -93,7 +93,7 @@ IF(CMAKE_COMPILER_IS_GNUCXX)
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
 
-IF(BUILD_EXAMPLE)
+IF(BUILD_NRRD_EXAMPLE)
   ADD_EXECUTABLE(NrrdIO_sampleIO sampleIO.c)
   TARGET_LINK_LIBRARIES(NrrdIO_sampleIO NrrdIO)
-ENDIF(BUILD_EXAMPLE)
+ENDIF(BUILD_NRRD_EXAMPLE)
