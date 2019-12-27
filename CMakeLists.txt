@@ -1,30 +1,4 @@
-#
-# NrrdIO: stand-alone code for basic nrrd functionality
-# Copyright (C) 2013, 2012, 2011, 2010, 2009  University of Chicago
-# Copyright (C) 2008, 2007, 2006, 2005  Gordon Kindlmann
-# Copyright (C) 2004, 2003, 2002, 2001, 2000, 1999, 1998  University of Utah
-#
-# This software is provided 'as-is', without any express or implied
-# warranty.  In no event will the authors be held liable for any
-# damages arising from the use of this software.
-#
-# Permission is granted to anyone to use this software for any
-# purpose, including commercial applications, and to alter it and
-# redistribute it freely, subject to the following restrictions:
-#
-# 1. The origin of this software must not be misrepresented; you must
-#    not claim that you wrote the original software. If you use this
-#    software in a product, an acknowledgment in the product
-#    documentation would be appreciated but is not required.
-#
-#   2. Altered source versions must be plainly marked as such, and must
-#    not be misrepresented as being the original software.
-#
-# 3. This notice may not be removed or altered from any source distribution.
-#
-
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
-PROJECT(NrrdIO)
+PROJECT(ITK3P_NrrdIO)
 INCLUDE_REGULAR_EXPRESSION("^.*.h$")
 
 #
@@ -34,18 +8,40 @@ INCLUDE_REGULAR_EXPRESSION("^.*.h$")
 # package. See http://teem.sourceforge.net for more information.
 #
 
-SET(nrrdio_SRCS comment.c enumsNrrd.c mop.c string.c 754.c defaultsNrrd.c
-parseAir.c dio.c format.c parseNrrd.c formatEPS.c encoding.c
-formatNRRD.c encodingAscii.c formatPNG.c encodingBzip2.c
-formatPNM.c accessors.c encodingGzip.c formatText.c
-array.c encodingHex.c formatVTK.c read.c arraysNrrd.c encodingRaw.c
-gzio.c reorder.c write.c axis.c endianAir.c  keyvalue.c
-biffbiff.c biffmsg.c endianNrrd.c methodsNrrd.c  sane.c enum.c
-miscAir.c simple.c )
+SET(nrrdio_SRCS 754.c mop.c array.c parseAir.c dio.c sane.c endianAir.c
+string.c enum.c miscAir.c biffbiff.c biffmsg.c accessors.c defaultsNrrd.c
+enumsNrrd.c arraysNrrd.c methodsNrrd.c reorder.c axis.c simple.c comment.c
+keyvalue.c endianNrrd.c parseNrrd.c gzio.c read.c write.c format.c
+formatNRRD.c encoding.c encodingRaw.c encodingAscii.c encodingHex.c
+encodingGzip.c subset.c encodingBzip2.c formatEPS.c formatPNG.c
+formatPNM.c formatText.c formatVTK.c )
 
-# Turn on TEEM_BUILD so that the proper dll export def's are
-# used on windows builds.
-ADD_DEFINITIONS(-DTEEM_BUILD=1)
+# Turn on TEEM_BUILD and TEEM_STATIIC so that the proper dll export
+# def's are used on windows builds.
+ADD_DEFINITIONS(-DTEEM_BUILD)
+
+if(NOT BUILD_SHARED_LIBS)
+ set(TEEM_STATIC 1)
+endif()
+
+# Configure (and learn how to find) NrrdIO.h
+CONFIGURE_FILE(${ITK3P_NrrdIO_SOURCE_DIR}/NrrdIO.h.in
+  ${ITK3P_NrrdIO_BINARY_DIR}/NrrdIO.h)
+INCLUDE_DIRECTORIES(
+  ${ITK3P_NrrdIO_BINARY_DIR}
+)
+
+#-----------------------------------------------------------------------------
+# Find platform-specific differences in the handling of IEEE floating point
+# special values.
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/TestQnanhibit.cmake)
+test_qnanhibit(QNANHIBIT_VALUE ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
+if(QNANHIBIT_VALUE)
+   set(QNANHIBIT 1 CACHE INTERNAL "The 22nd bit of 32-bit floating-point quiet NaN.")
+else(QNANHIBIT_VALUE)
+   set(QNANHIBIT 0 CACHE INTERNAL "The 22nd bit of 32-bit floating-point quiet NaN.")
+endif(QNANHIBIT_VALUE)
 
 #The QNANHIBIT variable is configured by the root level CMakeLists.txt
 IF(QNANHIBIT)
@@ -64,14 +60,27 @@ ENDIF(QNANHIBIT)
   ADD_DEFINITIONS(-DTEEM_DIO=0)
 #ENDIF(USE_DIRECTIO)
 
-# Possibly turn on usage of zlib compression (requires linking with libz)
-# (i.e., programs compiled with ITKNrrdIO must also be compiled with zlib)
-#ADD_DEFINITIONS(-DTEEM_ZLIB=1)
+# Tell NRRD to enable nrrdEncodingGzip
+ADD_DEFINITIONS(-DTEEM_ZLIB=1)
 
-ADD_LIBRARY(NrrdIO ${nrrdio_SRCS} )
+ADD_LIBRARY(ITKNrrdIO ${nrrdio_SRCS} )
+TARGET_LINK_LIBRARIES(ITKNrrdIO ${ITKZLIB_LIBRARIES})
 
-## These are ITK-specific
-#TARGET_LINK_LIBRARIES(NrrdIO ${ITK_ZLIB_LIBRARIES} )
-#INSTALL_TARGETS(/lib/InsightToolkit ITKNrrdIO)
-#INSTALL_FILES(/include/InsightToolkit/Utilities/NrrdIO "(\\.h)$")
+IF(ITK_LIBRARY_PROPERTIES)
+  SET_TARGET_PROPERTIES(ITKNrrdIO PROPERTIES ${ITK_LIBRARY_PROPERTIES})
+ENDIF(ITK_LIBRARY_PROPERTIES)
 
+INSTALL(TARGETS ITKNrrdIO
+  EXPORT ${ITK3P_INSTALL_EXPORT_NAME}
+  RUNTIME DESTINATION ${ITK3P_INSTALL_RUNTIME_DIR} COMPONENT RuntimeLibraries
+  LIBRARY DESTINATION ${ITK3P_INSTALL_LIBRARY_DIR} COMPONENT RuntimeLibraries
+  ARCHIVE DESTINATION ${ITK3P_INSTALL_ARCHIVE_DIR} COMPONENT Development
+  )
+
+INSTALL(FILES ${ITK3P_NrrdIO_BINARY_DIR}/NrrdIO.h itk_NrrdIO_mangle.h
+  DESTINATION ${ITK3P_INSTALL_INCLUDE_DIR} # TODO: itk_NrrdIO.h #include "itkNrrdIO/NrrdIO.h"
+  COMPONENT Development)
+
+IF(CMAKE_COMPILER_IS_GNUCXX)
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-strict-aliasing")
+ENDIF(CMAKE_COMPILER_IS_GNUCXX)
