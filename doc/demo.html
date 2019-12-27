@@ -1,0 +1,192 @@
+<!--
+  Documentation for "teem: Gordon Kindlmann's research software"
+  Copyright (C) 2004, 2003, 2002, 2001, 2000 University of Utah
+  This documentation may not be modified or redistributed in any
+  form, except by the copyright holder.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html/4/loose.dtd"> 
+<html>
+<head>
+<title>
+Teem: nrrd: Demonstrations of using nrrd
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"> 
+</head>
+<body bgcolor="#ffffff">
+<a href="http://sourceforge.net/projects/teem"><img 
+ src="http://sflogo.sourceforge.net/sflogo.php?group_id=85445&amp;type=13"
+ align=right width="120" height="30" alt="Get Teem at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr>
+  <td width=80 height=80>
+    <a href="../index.html"><img border=0 width=80 height=80 alt=""
+    src="../img/teem80.jpg"></a>
+  <td height=80>
+  <td width=80 height=80>
+    <a href="./index.html"><img border=0 width=80 height=80 alt=""
+    src="../img/nrrd80.jpg"></a>
+  <td>
+<tr>
+  <td width=80 align=center valign=top>
+    <b><a href="../index.html">teem</a></b>
+  <td valign=top>
+    <b>/</b>
+  <td width=80 align=center valign=top>
+    <b><a href="./index.html">nrrd</a></b>
+  <td>
+    <h2>&nbsp;&nbsp;<b>Demonstrations of using nrrd</b></h2>
+</table>
+
+While the various pages for the individual <a
+href="../unrrdu/index.html"><tt>unu</tt></a> commands show the use of
+the commands in isolation (or relative isolation), the examples here
+are more like case studies.  They show how a combination <b>nrrd</b>
+functions can be used to get some data processing task done.
+
+<p>
+
+<table>
+
+<tr>
+<td align=right>
+  <a href="volvis/index.html"><img border=0 alt=""
+  width=143 height=85 src="volvis/__BostonTeapot.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="volvis/index.html">Inspecting volvis.org datasets</a><br>
+  Shows how to create detached headers for the data at 
+  <a href="http://www.volvis.org">volvis.org</a>, and the uses both
+  <tt>unu</tt> as well as the underlying <b>nrrd</b> API in order to 
+  make some projections of the datasets, to create a kind of visual
+  gallery of the various datasets available there.
+
+<tr>
+<td align=right>
+  <a href="tutorial/index.html"><img border=0 alt=""
+  width=143 height=85 src="tutorial/img/_yvarhc.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="tutorial/index.html">Basic 3D volume inspection with unu</a><br>
+  Demonstrates practical usage of unu commands <tt>histo</tt>, <tt>dhisto</tt>,
+  <tt>slice</tt>, and <tt>project</tt> to look at volume data.
+
+<tr>
+<td align=right>
+  <a href="make/index.html"><img border=0 alt=""
+  width=143 height=85 src="make/img/mini-coliso-mos.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="make/index.html">Making a synthetic dataset</a><br>
+  Shows how judicious use of <tt>unu</tt> allows you to create
+  and inspect interesting synthetic datasets.
+
+<tr>
+<td align=right>
+  <a href="cone/index.html"><img border=0 alt=""
+  width=143 height=85 src="cone/_rend.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="cone/index.html">Making a cone</a><br>
+  Another example of <tt>unu</tt> hacking to create a 
+  dataset completely from scratch.
+
+<tr>
+<td align=right>
+  <a href="bunny/index.html"><img border=0 alt=""
+  width=143 height=85 src="bunny/_bunny.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="bunny/index.html">Making a bunny</a><br>
+  Sometimes, when it should be easy to put a set of CT slices together
+  into a volume, there are annoying little problems,
+  which can be handled with <tt>unu</tt>.
+
+<tr>
+<td align=right>
+  <a href="vfhand/index.html"><img border=0 alt=""
+  width=143 height=85 src="vfhand/_gradL2.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="vfhand/index.html">Making Visible Female CT Hands</a><br>
+  Isolating the hands from the Visible Female, and "removing" the
+  portions of the hip bones that are near her hands.
+
+<tr>
+<td align=right>
+  <a href="vmhead/index.html"><img border=0 alt=""
+  width=143 height=85 src="vmhead/__fix0.png" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="vmhead/index.html">Making a Visible Male CT Head</a><br>
+  There are various impediments to making a clean volume of the 
+  Visible Human male frozen CT head: glitches in the raw images,
+  resolution changes, and floating bits in front of his face.
+  <tt>Unu</tt> can deal with these.
+
+<tr>
+<td align=right>
+  <a href="head/index.html"><img border=0 alt=""
+  width=143 height=85 src="minihead.jpg" align=left></a>
+<td width=10>
+<td valign=middle>
+  <a href="head/index.html">Visible Female color data processing</a><br>
+  Steps toward producing a clean and closely cropped volume from
+  the color images.
+</table>
+
+<!--
+
+processing visible human data
+
+in C examples, mention that many nrrd functions do allow
+nin == nout
+
+from scratch:
+nrrdAlloc, nrrdMaybeAlloc, nrrdPPM, nrrdPGM
+unu make, unu make -h
+
+on images:
+slicing, cropping, padding
+
+oh look, content has been set
+
+resampling
+
+shuffling, flipping, permuting
+
+joining
+
+histogram equalization, with and without smart, as compared to
+other programs.
+
+arithmetic, and utility of NrrdIters
+
+color mapping (lut, rmap, imap)
+
+on volumes:
+histogramming
+
+oh look, content has been set
+
+with blurring, joint histograms
+
+quantizing, unquantizing, converting
+
+projection as a way of inspecting data
+
+dice, join
+
+fancy tiling
+
+- using reshape and crop to nix fixed length binary headers
+
+- using pad on complex data to get a color image
+
+-->
+
+
+<p>
+<a href="http://validator.w3.org/check/referer">&nbsp;</a>
+</body>
+</html>

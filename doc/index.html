@@ -1,0 +1,134 @@
+<!--
+  Documentation for "teem: Gordon Kindlmann's research software"
+  Copyright (C) 2004, 2003, 2002, 2001, 2000 University of Utah
+  This documentation may not be modified or redistributed in any
+  form, except by the copyright holder.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html/4/loose.dtd"> 
+<html>
+<head>
+<title>
+Teem: nrrd
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"> 
+</head>
+<body bgcolor="#ffffff">
+<a href="http://sourceforge.net/projects/teem"><img 
+ src="http://sflogo.sourceforge.net/sflogo.php?group_id=85445&amp;type=13"
+ align=right width="120" height="30" alt="Get Teem at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+<table width="100%" border=0 cellpadding=0 cellspacing=0>
+<tr>
+  <td width="1%" height=80>
+    <a href="../index.html"><img border=0 width=80 height=80 alt="to teem"
+    src="../img/teem80.jpg"></a>
+  <td width="20%" height=80>
+  <td width="40%" height=80 align=center valign=middle>
+    <h1>nrrd</h1>
+  <td width="30%" height=80>
+<tr>
+  <td align=center valign=top>
+    <b><a href="../index.html">teem</a></b>
+  <td>
+  <td align=center>
+    <img width=256 height=256 alt="Riot-nrrd hackers unite"
+      src="../img/nrrd256.jpg"><br>
+  <td align=left valign=middle><font size="+1">
+    - <a href="intro.html">Introduction</a><br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="descformat.html">General NRRD format description</a><br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="format.html">NRRD format definition</a><br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="files/index.html">Example NRRD files</a><br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="otherformat.html">Compatible file formats</a><br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="lib.html"> Library description </a> <br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="kernels.html"> Kernels in Nrrd </a> <br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="demo.html">Demo of <b>nrrd</b>/<tt>unu</tt> uses</a><br>
+       <font size="-2">&nbsp;</font><br>
+    - <a href="soapbox.html">Advocacy</a><br>
+    </font>
+</table>
+
+<h2>Nearly Raw Raster Data</h2>
+
+Nrrd is a library and file format designed to support scientific
+visualization and image processing involving N-dimensional raster
+data.  Nrrd stands for "nearly raw raster data".  Besides dimensional
+generality, nrrd is flexible with respect to type (8 integral types, 2
+floating point types), encoding of written files (raw, ascii, hex, or
+gzip or bzip2 compression), and endianness (the byte order of data is
+explicitly recorded when the type or encoding expose it).  Besides the
+NRRD format, the library can read and write PNG, PPM, and PGM images,
+as well as some VTK "STRUCTURED_POINTS" datasets.  About two dozen
+operations on raster data are implemented, including simple things
+like quantizing, slicing, and cropping, as well as fancier things like
+projection, histogram equalization, and filtered resampling (up and
+down) with arbitrary seperable kernels. 
+
+<p>
+
+This document aims to describe the NRRD file format and the
+<b>nrrd</b> library, which can read and write NRRD files.  Various
+examples illustrate the variety of possible nrrd operations available
+in the <b>nrrd</b> library, which are also accessible from the
+command-line "<tt>unu</tt>" program.  Impatient readers should look at
+<a href="files/index.html">"Example NRRD files"</a>, <a
+href="demo.html">"Demonstrations using nrrd"</a>, and <a
+href="soapbox.html">"Advocacy"</a>.
+
+<p>
+
+In these pages, "NRRD" refers to the file format, "<tt>Nrrd</tt>"
+refers to the C struct defined in <tt>nrrd.h</tt>, "Nrrd"
+refers to the library containing all the nrrd functions, and "nrrd"
+is a general term for all of these.
+
+<ul>
+
+<li><a href="intro.html">Introduction</a>: What kind of data
+nrrd can represent, with a discussion of dimension, axes, and scalar
+types.
+
+<li><a href="descformat.html">Description of NRRD file
+format</a>: General information about the format, and comparisons
+with other similar formats.
+
+<li><a href="format.html">Definition of NRRD file format</a>:
+How to get data into and out of nrrd.
+
+<li><a href="files/index.html">Example NRRD files</a>: A
+variety of NRRD file format examples, as well as PPM, PGM, and text
+files that encode nrrd information.
+
+<li><a href="otherformat.html">NRRD-Compatible file
+formats</a>: How NRRD plays well with PPM, PGM, and PNG images,
+as well as plain text files.  Information normally found in the NRRD
+header can be losslessly encoded in these formats.
+
+<li><a href="lib.html">nrrd Library Description</a>: High-level
+documentation for the Nrrd library and the various functions
+for manipulating <tt>Nrrd</tt>s.
+
+<li><a href="kernels.html">Kernels</a>: Nrrd has a particular
+way of representing the continuous kernels that are the basis
+of convolution-based resampling.
+
+<li><a href="demo.html">Demonstrations of using nrrd</a>: A
+series of examples of how the Nrrd library and/or the
+"<tt>unu</tt>" program can be used to do useful things.
+
+<li><a href="soapbox.html">Advocacy</a>: Why you should
+use nrrd.
+
+</ul>
+
+
+<p>
+<a href="http://validator.w3.org/check/referer">&nbsp;</a>
+</body>
+</html>
